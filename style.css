@@ -16,6 +16,10 @@ h1 {
   text-align: center;
 }
 
+.output {
+  height: 75px;
+}
+
 .game-board {
   background: black;
   display: grid;
@@ -44,4 +48,8 @@ h1 {
 .square:nth-child(n + 4):nth-child(-n + 6) {
   border-top: 1px solid black;
   border-bottom: 1px solid black;
+}
+
+button {
+  margin-top: 15px;
 }
