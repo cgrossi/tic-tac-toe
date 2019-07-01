@@ -55,7 +55,7 @@ const gameBoard = (() => ({
                                                         this.switchTurn();
                                                         const that = this;
                                                         setTimeout(function cpu() {
-                                        const cpuPick = Math.floor(Math.random() * 9)
+                                                                const cpuPick = Math.floor(Math.random() * 9);
                                                                 if (that.board[cpuPick] == undefined) {
                                                                         that.board[cpuPick] = 'O';
                                                                         document.querySelector(
@@ -158,8 +158,7 @@ function showGame() {
         output.classList.remove('hide');
         reset.classList.remove('hide');
         grid.classList.remove('hide');
-        pveButton.classList.add('hide');
-        pvpButton.classList.add('hide');
+        document.querySelector('.game-settings').classList.add('hide');
 }
 
 pveButton.addEventListener('click', () => {
