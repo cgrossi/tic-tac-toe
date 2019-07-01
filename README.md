@@ -8,3 +8,5 @@
 - Refactor code
 
 ## Bugs
+
+- Tie conditions not working properly

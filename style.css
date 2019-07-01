@@ -4,14 +4,23 @@
 
 body {
   max-width: 70vw;
+  height: 100vh;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: linear-gradient(
+    to bottom right,
+    rgb(190, 116, 3),
+    rgb(211, 129, 7)
+  );
+  font-family: monospace;
+  color: white;
 }
 
 h1 {
+  margin: 15px;
   font-size: 3rem;
   text-align: center;
 }
@@ -23,9 +32,9 @@ h1 {
   justify-content: space-around;
 }
 
-.game-settings button {
-  background: rgb(211, 129, 7);
-  border: none;
+.btn {
+  background: rgba(211, 129, 7, 0);
+  border: 1px solid white;
   color: white;
   padding: 20px 30px;
   text-transform: uppercase;
@@ -38,16 +47,11 @@ h1 {
 }
 
 .game-board {
-  background: black;
   display: grid;
   width: 600px;
   height: 600px;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-}
-
-.square {
-  background: white;
 }
 
 .square {
@@ -58,13 +62,13 @@ h1 {
 }
 
 .square:nth-child(3n + 2) {
-  border-right: 1px solid black;
-  border-left: 1px solid black;
+  border-right: 1px solid white;
+  border-left: 1px solid white;
 }
 
 .square:nth-child(n + 4):nth-child(-n + 6) {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
 }
 
 button {
