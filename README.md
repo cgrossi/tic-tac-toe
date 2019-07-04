@@ -9,4 +9,4 @@
 
 ## Bugs
 
-- Tie conditions not working properly
+- ~~Tie conditions not working properly~~

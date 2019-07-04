@@ -114,32 +114,24 @@ const gameBoard = (() => ({
         },
         checkWin(marker) {
                 console.log('check win');
-                if (!this.board.includes(undefined)) {
-                        output.textContent = `It's a tie!!`;
-                }
                 if (this.board[0] == marker && this.board[1] == marker && this.board[2] == marker) {
                         this.winner = marker;
-                }
-                if (this.board[3] == marker && this.board[4] == marker && this.board[5] == marker) {
+                } else if (this.board[3] == marker && this.board[4] == marker && this.board[5] == marker) {
                         this.winner = marker;
-                }
-                if (this.board[6] == marker && this.board[7] == marker && this.board[8] == marker) {
+                } else if (this.board[6] == marker && this.board[7] == marker && this.board[8] == marker) {
                         this.winner = marker;
-                }
-                if (this.board[0] == marker && this.board[3] == marker && this.board[6] == marker) {
+                } else if (this.board[0] == marker && this.board[3] == marker && this.board[6] == marker) {
                         this.winner = marker;
-                }
-                if (this.board[1] == marker && this.board[4] == marker && this.board[7] == marker) {
+                } else if (this.board[1] == marker && this.board[4] == marker && this.board[7] == marker) {
                         this.winner = marker;
-                }
-                if (this.board[2] == marker && this.board[5] == marker && this.board[8] == marker) {
+                } else if (this.board[2] == marker && this.board[5] == marker && this.board[8] == marker) {
                         this.winner = marker;
-                }
-                if (this.board[0] == marker && this.board[4] == marker && this.board[8] == marker) {
+                } else if (this.board[0] == marker && this.board[4] == marker && this.board[8] == marker) {
                         this.winner = marker;
-                }
-                if (this.board[2] == marker && this.board[4] == marker && this.board[6] == marker) {
+                } else if (this.board[2] == marker && this.board[4] == marker && this.board[6] == marker) {
                         this.winner = marker;
+                } else if (!gameBoard.board.includes(undefined) && gameBoard.board.length === 9) {
+                        output.textContent = `The game is a tie!`;
                 }
         },
         resetGame() {
