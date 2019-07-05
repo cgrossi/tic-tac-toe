@@ -10,92 +10,15 @@ const gameBoard = (() => ({
   gameType: null,
   board: [],
   winner: null,
-  gameStart(type) {
-    this.currentTurn = 'X';
-    if (this.gameType == 'pvp') {
-      squares.forEach((el, index) => {
-        el.classList.add(`s${index + 1}`);
-        el.addEventListener('click', event => {
-          if (!event.target.textContent && this.currentTurn !== null) {
-            event.target.textContent = this.currentTurn;
-            this.board[index] = this.currentTurn;
-            this.checkWin(this.currentTurn);
-            if (this.winner == null) {
-              this.switchTurn();
-            } else {
-              output.textContent = `The winner is ${this.winner}!`;
-            }
-          } else if (!this.currentTurn) {
-            this.currentTurn = 'X';
-            event.target.textContent = this.currentTurn;
-            this.board[index] = this.currentTurn;
-            this.checkWin(this.currentTurn);
-            console.log(this.currentTurn);
-            if (this.winner == null) {
-              this.switchTurn();
-            } else {
-              output.textContent = `The winner is ${this.winner}!`;
-            }
-          }
-        });
-      });
-    } else if (this.gameType == 'pve') {
-      console.log('in pve');
-      // Set square event listeners & manage player turn
-      squares.forEach((el, index) => {
-        el.classList.add(`s${index + 1}`);
-      });
-      squares.forEach((el, index) => {
-        el.addEventListener('click', event => {
-          if (!event.target.textContent && this.currentTurn == 'X') {
-            event.target.textContent = this.currentTurn;
-            this.board[index] = this.currentTurn;
-            this.checkWin(this.currentTurn);
-            if (this.winner == null) {
-              this.switchTurn();
-              const that = this;
-              setTimeout(function cpu() {
-                const cpuPick = Math.floor(Math.random() * 9);
-                if (that.board[cpuPick] == undefined) {
-                  that.board[cpuPick] = 'O';
-                  document.querySelector(
-                    `.s${cpuPick + 1}`
-                  ).textContent = 'O';
-                  that.checkWin(that.currentTurn);
-                  if (that.winner == null) {
-                    that.switchTurn();
-                  } else {
-                    output.textContent = `The winner is ${that.winner}!`;
-                  };
-                } else {
-                  let force = 0;
-                  while (force < 9) {
-                    if (that.board[force] == undefined && that.currentTurn == 'O') {
-                      that.board[force] = 'O';
-                      document.querySelector(`.s${force + 1}`).textContent = 'O';
-                      that.checkWin(that.currentTurn);
-                      if (that.winner == null) {
-                        that.switchTurn();
-                        break;
-                      } else {
-                        output.textContent = `The winner is ${that.winner}!`;
-                        break;
-                      }
-                    }
-                    force++;
-                  }
-                }
-              }, 1000);
-            } else {
-              output.textContent = `The winner is ${this.winner}!`;
-            }
-          }
-        });
-      });
-    }
+  setBoard() {
+    squares.forEach((square, index) => {
+      square.classList.add(`s${index + 1}`);
+    }) 
+    squares.forEach(el => {
+      el.addEventListener('click', moveHandler)
+    })
   },
   switchTurn() {
-    console.log('switch turns');
     if (this.currentTurn == 'X') {
       this.currentTurn = 'O';
     } else {
@@ -103,63 +26,71 @@ const gameBoard = (() => ({
     }
   },
   checkWin(marker) {
-    console.log('check win');
     if (
       this.board[0] == marker &&
       this.board[1] == marker &&
       this.board[2] == marker) {
       this.winner = marker;
+      this.announceWinner(gameBoard.winner);
     } else if (
       this.board[3] == marker &&
       this.board[4] == marker &&
       this.board[5] == marker) {
       this.winner = marker;
+      this.announceWinner(gameBoard.winner);
     } else if (
       this.board[6] == marker &&
       this.board[7] == marker &&
       this.board[8] == marker) {
       this.winner = marker;
+      this.announceWinner(gameBoard.winner);
     } else if (
       this.board[0] == marker &&
       this.board[3] == marker &&
       this.board[6] == marker) {
       this.winner = marker;
+      this.announceWinner(gameBoard.winner);
     } else if (
       this.board[1] == marker &&
       this.board[4] == marker &&
       this.board[7] == marker) {
       this.winner = marker;
+      this.announceWinner(gameBoard.winner);
     } else if (
       this.board[2] == marker &&
       this.board[5] == marker &&
       this.board[8] == marker) {
       this.winner = marker;
+      this.announceWinner(gameBoard.winner);
     } else if (
       this.board[0] == marker &&
       this.board[4] == marker &&
       this.board[8] == marker) {
       this.winner = marker;
+      this.announceWinner(gameBoard.winner);
     } else if (
       this.board[2] == marker &&
       this.board[4] == marker &&
       this.board[6] == marker) {
       this.winner = marker;
-    } else if (!gameBoard.board.includes(undefined) &&
-      gameBoard.board.length === 9) {
+      this.announceWinner(gameBoard.winner);
+    } else if (!gameBoard.board.includes(undefined) && gameBoard.board.length === 9) {
       output.textContent = `The game is a tie!`;
     }
+  },
+  announceWinner(winner) {
+    output.textContent = `The winner is ${winner}`
   },
   resetGame() {
     this.winner = null;
     this.board = [];
-    this.currentTurn = null;
+    this.currentTurn = 'X';
 
     squares.forEach(el => {
       el.textContent = '';
     });
 
     output.textContent = '';
-    this.gameStart();
   },
 }))();
 
@@ -171,20 +102,70 @@ function showGame() {
   document.querySelector('.game-settings').classList.add('hide');
 }
 
+const moveHandler = (event) => {
+  if(event.target.textContent || gameBoard.winner) {
+    return console.log('Invalid move')
+  }
+
+  if(gameBoard.gameType === 'pvp') {
+    event.target.textContent = gameBoard.currentTurn
+    gameBoard.board[+Array.from(event.target.classList).find(el => el.match(/^s\d/))[1] - 1] = gameBoard.currentTurn;
+    gameBoard.checkWin(gameBoard.currentTurn);
+    gameBoard.switchTurn();
+  }
+
+  if(gameBoard.gameType === 'pve') {
+
+    event.target.textContent = gameBoard.currentTurn
+    gameBoard.board[+Array.from(event.target.classList).find(el => el.match(/^s\d/))[1] - 1] = gameBoard.currentTurn;
+    gameBoard.checkWin(gameBoard.currentTurn);
+    gameBoard.switchTurn();
+
+
+    setTimeout(function cpu() {
+      const cpuPick = Math.floor(Math.random() * 9);
+
+      if (gameBoard.board[cpuPick] == undefined) {
+        gameBoard.board[cpuPick] = 'O';
+        document.querySelector(`.s${cpuPick + 1}`).textContent = 'O';
+        gameBoard.checkWin(gameBoard.currentTurn);
+        gameBoard.switchTurn();
+
+      } else {
+
+        let force = 0;
+        while (force < 9) {
+          if (gameBoard.board[force] == undefined && gameBoard.currentTurn == 'O') {
+            gameBoard.board[force] = 'O';
+            document.querySelector(`.s${force + 1}`).textContent = 'O';
+            gameBoard.checkWin(gameBoard.currentTurn);
+            gameBoard.switchTurn();
+            break;
+          }
+          force++;
+        }
+      }
+
+    }, 2000)
+
+  }
+}
+
 pveButton.addEventListener('click', () => {
   gameBoard.gameType = 'pve';
 
   showGame();
 
-  gameBoard.gameStart('pve');
+  gameBoard.currentTurn = 'X'
+  gameBoard.setBoard();
 });
 
 pvpButton.addEventListener('click', () => {
   gameBoard.gameType = 'pvp';
 
   showGame();
-
-  gameBoard.gameStart('pvp');
+  gameBoard.currentTurn = 'X'
+  gameBoard.setBoard();
 });
 
 reset.addEventListener('click', () => {
