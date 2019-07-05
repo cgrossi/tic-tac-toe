@@ -85,11 +85,9 @@ const gameBoard = (() => ({
     this.winner = null;
     this.board = [];
     this.currentTurn = 'X';
-
     squares.forEach(el => {
       el.textContent = '';
     });
-
     output.textContent = '';
   },
 }))();
@@ -98,7 +96,6 @@ function showGame() {
   output.classList.remove('hide');
   reset.classList.remove('hide');
   grid.classList.remove('hide');
-
   document.querySelector('.game-settings').classList.add('hide');
 }
 
@@ -147,22 +144,18 @@ const moveHandler = (event) => {
       }
 
     }, 2000)
-
   }
 }
 
 pveButton.addEventListener('click', () => {
   gameBoard.gameType = 'pve';
-
   showGame();
-
   gameBoard.currentTurn = 'X'
   gameBoard.setBoard();
 });
 
 pvpButton.addEventListener('click', () => {
   gameBoard.gameType = 'pvp';
-
   showGame();
   gameBoard.currentTurn = 'X'
   gameBoard.setBoard();
