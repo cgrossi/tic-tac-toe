@@ -5,8 +5,9 @@
 - ~~Add Dumb AI~~
 - Add Smart AI
 - Create Better UI
-- Refactor code
+- ~~Refactor code~~
 
 ## Bugs
 
 - ~~Tie conditions not working properly~~
+- Extra clicking in single player causes marker switch

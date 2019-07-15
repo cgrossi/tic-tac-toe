@@ -45,9 +45,12 @@ h1 {
 .game-board {
   display: grid;
   width: 600px;
+  max-width: 80vw;
   height: 600px;
+  max-height: 80vw;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
+  margin-bottom: 15px;
 }
 
 .square {
@@ -73,4 +76,14 @@ button {
 
 .hide {
   display: none;
+}
+
+@media screen and (max-width: 500px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  .square {
+    font-size: 4rem;
+  }
 }
