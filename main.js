@@ -10,6 +10,7 @@ const gameBoard = (() => ({
   gameType: null,
   board: [],
   winner: null,
+  moveInProcess: false,
   setBoard() {
     squares.forEach((square, index) => {
       square.classList.add(`s${index + 1}`);
@@ -100,11 +101,12 @@ function showGame() {
 }
 
 const moveHandler = (event) => {
-  if(event.target.textContent || gameBoard.winner) {
+  if(event.target.textContent || gameBoard.winner || gameBoard.moveInProcess) {
     return console.log('Invalid move')
   }
 
   if(gameBoard.gameType === 'pvp') {
+    gameBoard.moveInProcess = true
     event.target.textContent = gameBoard.currentTurn
     gameBoard.board[+Array.from(event.target.classList).find(el => el.match(/^s\d/))[1] - 1] = gameBoard.currentTurn;
     gameBoard.checkWin(gameBoard.currentTurn);
@@ -112,7 +114,7 @@ const moveHandler = (event) => {
   }
 
   if(gameBoard.gameType === 'pve') {
-
+    gameBoard.moveInProcess = true
     event.target.textContent = gameBoard.currentTurn
     gameBoard.board[+Array.from(event.target.classList).find(el => el.match(/^s\d/))[1] - 1] = gameBoard.currentTurn;
     gameBoard.checkWin(gameBoard.currentTurn);
@@ -120,12 +122,14 @@ const moveHandler = (event) => {
 
 
     setTimeout(function cpu() {
+      gameBoard.moveInProcess = true
       const cpuPick = Math.floor(Math.random() * 9);
 
       if (gameBoard.board[cpuPick] == undefined) {
         gameBoard.board[cpuPick] = 'O';
         document.querySelector(`.s${cpuPick + 1}`).textContent = 'O';
         gameBoard.checkWin(gameBoard.currentTurn);
+        gameBoard.moveInProcess = false
         gameBoard.switchTurn();
 
       } else {
@@ -136,14 +140,14 @@ const moveHandler = (event) => {
             gameBoard.board[force] = 'O';
             document.querySelector(`.s${force + 1}`).textContent = 'O';
             gameBoard.checkWin(gameBoard.currentTurn);
+            gameBoard.moveInProcess = false
             gameBoard.switchTurn();
             break;
           }
           force++;
         }
       }
-
-    }, 2000)
+    }, 1500)
   }
 }
 

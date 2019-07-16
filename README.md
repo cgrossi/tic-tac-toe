@@ -10,4 +10,4 @@
 ## Bugs
 
 - ~~Tie conditions not working properly~~
-- Extra clicking in single player causes marker switch
+- ~~Extra clicking in single player causes marker switch~~
